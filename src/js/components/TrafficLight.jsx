@@ -16,46 +16,40 @@ const TrafficLight = () => {
     }
   };
 
-  const containerStyle = {
-    backgroundColor: "#222",
-    padding: "20px",
-    width: "100px",
-    borderRadius: "15px",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    gap: "10px",
-    margin: "50px auto"
-  };
-
-  const lightStyle = (lightColor) => ({
-    width: "60px",
-    height: "60px",
-    borderRadius: "50%",
-    backgroundColor: lightColor,
-    opacity: color === lightColor ? 1 : 0.3,
-    boxShadow: color === lightColor ? "0 0 20px 5px white" : "none",
-    cursor: "pointer",
-    transition: "opacity 0.3s, box-shadow 0.3s"
-  });
-
-  const buttonStyle = {
-    marginTop: "10px",
-    padding: "5px 10px",
-    backgroundColor: "#444",
-    color: "white",
-    border: "none",
-    borderRadius: "5px",
-    cursor: "pointer"
+  const getBootstrapColorClass = (c) => {
+    switch (c) {
+      case "red":
+        return "bg-danger";
+      case "yellow":
+        return "bg-warning";
+      case "green":
+        return "bg-success";
+      case "purple":
+        return "bg-purple"; // custom color, ver más abajo
+      default:
+        return "bg-secondary";
+    }
   };
 
   return (
-    <div style={containerStyle}>
+    <div className="bg-dark p-4 rounded d-flex flex-column align-items-center gap-3" style={{ width: "100px", margin: "50px auto" }}>
       {colors.map((c) => (
-        <div key={c} style={lightStyle(c)} onClick={() => setColor(c)}></div>
+        <div
+          key={c}
+          onClick={() => setColor(c)}
+          className={`rounded-circle ${getBootstrapColorClass(c)}`}
+          style={{
+            width: "60px",
+            height: "60px",
+            opacity: color === c ? 1 : 0.3,
+            boxShadow: color === c ? "0 0 20px 5px white" : "none",
+            cursor: "pointer",
+            transition: "opacity 0.3s, box-shadow 0.3s"
+          }}
+        />
       ))}
-      <button style={buttonStyle} onClick={toggleColor}>Cambiar color</button>
-      <button style={buttonStyle} onClick={addPurple}>Añadir púrpura</button>
+      <button className="btn btn-secondary btn-sm mt-2" onClick={toggleColor}>Cambiar color</button>
+      <button className="btn btn-secondary btn-sm mt-1" onClick={addPurple}>Añadir púrpura</button>
     </div>
   );
 };
